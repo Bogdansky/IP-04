@@ -1,6 +1,7 @@
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="java.time.format.*"%>
 <%!
+	String greeting = getHello();
     String getHello(){
         int hour = LocalDateTime.now().getHour();
         if (hour > 17){
@@ -17,30 +18,42 @@
 %>
 <html>
 <head>
-    <meta charset="utf-8">
+	<meta charset="ascii">
 </head>
 <body>
-    <p><%= getHello() %></p>
-    <table style="border:1px solid">
-        <thead>
-            <th>Дата</th>
-            <th>Номер дня недели</th>
+    <p><%= greeting %></p>
+    <table>
+        <thead style="border:1px solid">
+            <th>Date</th>
+            <th>Day of week number</th>
         </thead>
-        <tbody>
+        <tbody style="border:1px solid">
             <%
                 LocalDateTime now = LocalDateTime.now();
                 for(int i = 0; i < 7; i++){
                     LocalDateTime date = now.plusDays(i);
-                    out.println("<tr><td>"+date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"</td><td>"+date.getDayOfWeek().getValue()+"</td></tr>");
+                    out.println("<tr><td>"+date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"</td><td style='text-align:center'>"+date.getDayOfWeek().getValue()+"</td></tr>");
                 }
             %>
         </tbody>
     </table>
-    <form action="index.jsp?repeat=true">
+    <form>
+		<input type="hidden" name="repeat" value="1" />
         <button>Press</button>
     </form>
-    <% if (request.getParameter("repeat")=="true"){ %>
-        <%@include file="night.jsp" %>
+    <% if (request.getParameter("repeat")!= null){ %>
+		<%if(greeting.equals("Good evening!")){%>
+			<%@include file="evening.jsp" %>
+		<%}%>
+		<%if(greeting.equals("Good afternoon!")){%>
+			<%@include file="afternoon.jsp" %>
+		<%}%>
+		<%if(greeting.equals("Good morning!")){%>
+			<%@include file="morning.jsp" %>
+		<%}%>
+		<%if(greeting.equals("Good night!")){%>
+			<%@include file="night.jsp" %>
+		<%}%>
     <%}%>
 </body>
 </html>

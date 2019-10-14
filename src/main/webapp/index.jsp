@@ -15,6 +15,18 @@
         }
         return "Good night!";
     }
+    String getPage(){
+        switch(greeting){
+            case "Good evening!":
+                return "evening.jsp";
+            case "Good afternoon!":
+                return "afternoon.jsp";
+            case "Good morning!":
+                return "morning.jsp";
+            default:
+                return "night.jsp";
+        }
+    }
 %>
 <html>
 <head>
@@ -43,17 +55,17 @@
     </form>
     <% if (request.getParameter("repeat")!= null){ %>
 		<%if(greeting.equals("Good evening!")){%>
-			<%@include file="evening.jsp" %>
-		<%}%>
-		<%if(greeting.equals("Good afternoon!")){%>
-			<%@include file="afternoon.jsp" %>
-		<%}%>
-		<%if(greeting.equals("Good morning!")){%>
-			<%@include file="morning.jsp" %>
-		<%}%>
-		<%if(greeting.equals("Good night!")){%>
-			<%@include file="night.jsp" %>
-		<%}%>
+            <jsp:include page="evening.jsp" />
+        <%}%>
+        <%if(greeting.equals("Good afternoon!")){%>
+            <jsp:include page="afternoon.jsp" />
+        <%}%>
+        <%if(greeting.equals("Good morning!")){%>
+            <jsp:include page="morning.jsp" />
+        <%}%>
+        <%if(greeting.equals("Good night!")){%>
+            <jsp:include page="night.jsp" />
+        <%}%>
     <%}%>
 </body>
 </html>
